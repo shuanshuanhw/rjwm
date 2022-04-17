@@ -58,6 +58,8 @@ public class LoginCheckFilter implements Filter{
             log.info("用户已登录，用户id为：{}",request.getSession().getAttribute("employee"));
 
             int empId = (int) request.getSession().getAttribute("employee");
+
+            // 通过LocalThread类，在同一个线程流程中，传递变量，非常地好用
             BaseContext.setCurrentId(empId);
 
             filterChain.doFilter(request,response);

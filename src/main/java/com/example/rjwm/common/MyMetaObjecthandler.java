@@ -23,8 +23,9 @@ public class MyMetaObjecthandler implements MetaObjectHandler {
 
         metaObject.setValue("createTime", LocalDateTime.now());
         metaObject.setValue("updateTime",LocalDateTime.now());
-        metaObject.setValue("createUser",BaseContext.getCurrentId());
-        metaObject.setValue("updateUser",BaseContext.getCurrentId());
+        // 这个BaseContext.getCurrentId()是从Filter那里传过来的
+        metaObject.setValue("createUser",(long)BaseContext.getCurrentId());
+        metaObject.setValue("updateUser",(long)BaseContext.getCurrentId());
     }
 
     /**

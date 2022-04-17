@@ -27,6 +27,7 @@
           clearable
            @keyup.enter.native="handleQuery"
         >
+<!--          在 input中加上@ keyup. enter. native 就可以使用回车事件-->
           <i
             slot="prefix"
             class="el-input__icon el-icon-search"
@@ -93,6 +94,7 @@
               @click="statusHandle(scope.row)"
               v-if="user === 'admin'"
             >
+<!--                很巧妙地解决了数字到文字的转换问题-->
               {{ scope.row.status == '1' ? '禁用' : '启用' }}
             </el-button>
           </template>
