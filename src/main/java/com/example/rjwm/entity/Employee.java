@@ -1,7 +1,9 @@
 package com.example.rjwm.entity;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -10,8 +12,8 @@ import java.time.LocalDateTime;
 public class Employee implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
-    private Long id;
+    @TableId(type = IdType.AUTO,value = "ID")
+    private int id;
 
     private String username;
 
@@ -26,15 +28,15 @@ public class Employee implements Serializable {
     private String idNumber;
 
     private Integer status;
-
+    @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createTime;
-
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updateTime;
 
-    @TableField(fill = FieldFill.INSERT)
+ //
     private Long createUser;
 
-    @TableField(fill = FieldFill.INSERT_UPDATE)
+ //
     private Long updateUser;
 
 }

@@ -69,6 +69,9 @@
             </el-menu>
           </el-scrollbar>
         </div>
+        <!-- sidebar -->
+
+        <!--右主页-->
         <div class="main-container">
           <!-- <navbar /> -->
           <div class="navbar">
@@ -84,6 +87,9 @@
               <img src="images/icons/btn_close@2x.png" class="outLogin" alt="退出" @click="logout" />
             </div>
           </div>
+          <!-- <navbar /> -->
+
+          <!--下面用来显示page/member/list.html-->
           <div class="app-main" v-loading="loading">
             <div class="divTmp" v-show="loading"></div>
             <iframe
@@ -97,7 +103,11 @@
               v-show="!loading"
             ></iframe>
           </div>
+          <!--下面用来显示page/member/list.html-->
+
         </div>
+        <!--右主页-->
+
       </div>
     </div>
     <!-- 开发环境版本，包含了有帮助的命令行警告 -->
@@ -164,8 +174,10 @@
         },
         computed: {},
         created() {
+          // 获取登陆信息
           const userInfo = window.localStorage.getItem('userInfo')
           if (userInfo) {
+            // 由json.parse 返回数据
             this.userInfo = JSON.parse(userInfo)
           }
           this.closeLoading()
@@ -174,6 +186,7 @@
           this.timer = null
           clearTimeout(this.timer)
         },
+        // 一般在初始化页面完成后，再对dom节点进行相关操作
         mounted() {
           window.menuHandle = this.menuHandle
         },

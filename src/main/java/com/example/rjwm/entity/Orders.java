@@ -23,7 +23,7 @@ public class Orders implements Serializable {
 
 
     //下单用户id
-    private Long userId;
+    private int userId;
 
     //地址id
     private Long addressBookId;

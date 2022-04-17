@@ -104,6 +104,7 @@
               this.loading = true
               let res = await loginApi(this.loginForm)// await表示要等其它在后面的函数执行完才继续执行这个
               if (String(res.code) === '1') {
+                // 登陆成功后，把个人信息放在浏览器存储区域
                 localStorage.setItem('userInfo',JSON.stringify(res.data))
                 window.location.href= '/backend/index.html'
               } else {
