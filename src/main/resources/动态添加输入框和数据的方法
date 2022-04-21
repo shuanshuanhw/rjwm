@@ -1,0 +1,10 @@
+1、新建一个数组
+2、新建一个为这个数组添加数据的方法
+
+
+
+关于 const _this = this
+当前VUE中的this 是指向实例，相当于父级，指向指不到子级中。所需需要一个变量 _this 存储this得指向。
+
+还有一种方式，不用考虑const _this = this。
+将.then( ( ) => { } ) 和.catch( () => { } ) 中的function换成箭头函数， 因为箭头函数中的this是指向当前作用域，所以不需要进行 const _this = this。

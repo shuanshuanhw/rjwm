@@ -58,70 +58,48 @@
         label-width="180px"
         class="demo-ruleForm"
       >
-        <div>
-          <el-form-item
-            label="菜品名称:"
-            prop="name"
-          >
-            <el-input
-              v-model="ruleForm.name"
-              placeholder="请填写菜品名称"
-              maxlength="20"
-            />
-          </el-form-item>
-          <el-form-item
-            label="菜品分类:"
-            prop="categoryId"
-          >
-            <el-select
-              v-model="ruleForm.categoryId"
-              placeholder="请选择菜品分类"
-            >
-              <el-option v-for="(item,index) in dishList" :key="index" :label="item.name" :value="item.id" />
-            </el-select>
-          </el-form-item>
-        </div>
-        <div>
-          <el-form-item
-            label="菜品价格:"
-            prop="price"
-          >
-            <el-input
-              v-model="ruleForm.price"
-              placeholder="请设置菜品价格"
-            />
-          </el-form-item>
-        </div>
+
+        <!--动态数据结束-->
         <el-form-item label="口味做法配置:">
-          <el-form-item>
+
+<!--          width: 777px;-->
             <div class="flavorBox">
 
+<!--              添加按钮-->
               <span
                 v-if="dishFlavors.length == 0"
                 class="addBut"
                 @click="addFlavore"
               > + 添加口味</span>
+<!--              添加按钮-->
 
+<!--              当向数组添加数据后，这个容器立马显示出来，但上面的添加按钮立马就消失-->
               <div v-if="dishFlavors.length != 0" class="flavor">
 
+<!--                提醒文字-->
                 <div class="title">
                   <span>口味名（3个字内）</span><span>口味标签（输入标签回车添加）</span>
                 </div>
+<!--                提醒文字-->
 
+<!--                编辑区域-->
                 <div class="cont">
+
+<!--                  将数组里的数据，循环输出-->
                   <div
                     v-for="(item, index) in dishFlavors"
                     :key="index"
                     class="items"
                   >
+
+<!--                    width: 150px;-->
+<!--                    margin-right: 15px;-->
                     <div class="itTit">
-                      <!-- <SelectInput
-                        :dish-flavors-data="dishFlavorsData"
-                        :index="index"
-                        :value="item.name"
-                        @select="selectHandle"
-                      /> -->
+
+
+<!--                      这个div应该是增加一行-->
                       <div class="selectInput">
+<!--                        这一对看着像没用的div不能删除，否则就不会弹出数据-->
                         <div>
                            <el-input
                               v-model="item.name"
@@ -133,28 +111,46 @@
                               @input="inputHandle(index)"
                             />
                         </div>
+<!--                        这一对看着像没用的div不能删除，否则就不会弹出数据-->
+
+
+<!--                        当上面的输入框聚集时，下面的列表显示-->
                         <div v-show="item.showOption" class="flavorSelect">
+
+
                           <span
                             v-for="(it, ind) in dishFlavorsData"
                             :key="ind"
                             class="items"
                             @click="checkOption(it,ind,index)"
                           >{{ it.name }}</span>
+
+
                           <span
                             v-if="dishFlavorsData == []"
                             class="none"
                           >无数据</span>
+
+
                         </div>
+<!--                        当上面的输入框聚集时，下面的列表显示-->
+
                       </div>
+<!--                      这个div应该是增加一行-->
+
                     </div>
                     <div
                       class="labItems"
                       style="display: flex"
                     >
+
+
                       <span
                         v-for="(it, ind) in item.value"
                         :key="ind"
                       >{{ it }} <i @click="delFlavorLabel(index, ind)">X</i></span>
+
+
                       <div
                         class="inputBox"
                         :style="inputStyle"
@@ -163,64 +159,35 @@
                         @keydown.enter="(val)=>keyDownHandle(val,index)"
                       ></div>
                     </div>
+
+
                     <span
                       class="delFlavor delBut non"
                       @click="delFlavor(index)"
                     >删除</span>
+
+
                   </div>
+<!--                  将数组里的数据，循环输出-->
+
                 </div>
+<!--                编辑区域-->
+
+<!--                添加口味按钮-->
                 <div
                   class="addBut"
                   @click="addFlavore"
                 >
                   添加口味
                 </div>
+<!--                添加口味按钮-->
               </div>
+<!--              当向数组添加数据后，这个容器立马显示出来，但上面的添加按钮立马就消失-->
             </div>
-          </el-form-item>
+
         </el-form-item>
-        <div>
-        </div>
-        <div>
-          <el-form-item
-            label="菜品图片:"
-            prop="region"
-            class="uploadImg"
-          >
-            <el-upload
-              class="avatar-uploader"
-              action="/common/upload"
-              :show-file-list="false"
-              :on-success="handleAvatarSuccess"
-              :on-change="onChange"
-              ref="upload"
-            >
-              <img
-                v-if="imageUrl"
-                :src="imageUrl"
-                class="avatar"
-              ></img>
-              <i
-                v-else
-                class="el-icon-plus avatar-uploader-icon"
-              ></i>
-            </el-upload>
-          </el-form-item>
-        </div>
-        <div class="address">
-          <el-form-item
-            label="菜品描述:"
-            prop="region"
-          >
-            <el-input
-              v-model="ruleForm.description"
-              type="textarea"
-              :rows="3"
-              placeholder="菜品描述，最长200字"
-              maxlength="200"
-            />
-          </el-form-item>
-        </div>
+<!--动态数据结束-->
+
         <div class="subBox address">
           <el-form-item>
             <el-button @click="goBack()">
@@ -256,10 +223,13 @@
     <script src="../../js/index.js"></script>
     <script src="../../api/food.js"></script>
     <script>
+      var name = 'hello';
       new Vue({
         el: '#food-add-app',
         data() {
           return {
+            name:"你好",
+            date:new Date(),
             id: '',
             restKey: 0,
             textarea: '',
@@ -324,7 +294,10 @@
         created() {
           this.getDishList()
           // 口味临时数据
+
+          // 初始化了一个喜爱的味道初始值
           this.getFlavorListHand()
+          // 获取url地址上面的参数 这里在同个页面处理增加和修改的事情，如果有带id号就是修改，否则就是增加，这么处理有点复杂
           this.id = requestUrlParam('id')
           this.actionType = this.id ? 'edit' : 'add'
           if (this.id) {
@@ -334,6 +307,13 @@
         mounted() {
         },
         methods: {
+            show2 :() =>
+            {
+                // 箭头函数没有自己的this, 它的this是继承而来; 默认指向在定义它时所处的对象(宿主对象),而不是执行时的对象, 定义它的时候,可能环境是window
+                console.log('箭头方法.............................');
+                console.log(this.name);
+                console.log(this);
+            },
           async init () {
             queryDishById(this.id).then(res => {
               console.log(res)
@@ -354,6 +334,8 @@
           // 按钮 - 添加口味
           addFlavore () {
             this.dishFlavors.push({'name': '', 'value': [], showOption: false}) // JSON.parse(JSON.stringify(this.dishFlavorsData))
+            alert(this.name)
+              this.show2();
           },
 
           // 按钮 - 删除口味
@@ -410,18 +392,33 @@
             ]
           },
 
+          // 当输入框取得焦点后
+          // index是指数组遍历后的下标
+          // st由人为控制，控制
           selectFlavor(st,index){
             console.log('st',st)
             console.log('index',index)
             console.log('this.dishFlavors',this.dishFlavors)
+            // JSON.stringify 方法将一个 JavaScript 值（对象或者数组）转换为一个 JSON 字符串
+            // JSON.parse() 方法用来解析JSON字符串，构造由字符串描述的JavaScript值或对象
+            // 这里不知这么转来转去是几个意思
             const obj = JSON.parse(JSON.stringify(this.dishFlavors[index]))
             obj.showOption = st
+            // splice可以添加也可以删除数据
+            // (index,1,obj)的意思是在第index位增加一位叫obj的对象
+            //
+            // 替换一下
             this.dishFlavors.splice(index,1,obj)
-            // this.dishFlavors[index].showOption = st
+
+            // this.dishFlavors[index].showOption = st 这是方法二，上面的是方法一，似乎方法二更简单明了
           },
 
           outSelect(st,index){
+              // 在vue中的普通方法中，this就是指向vue本身的，这里可能是因为下面用了箭头函数，箭头函数的this指向window，所以先存储起来
+
             const _this = this
+              // setTimeout(要执行的代码, 等待的毫秒数)
+              // setTimeout(JavaScript 函数, 等待的毫秒数)
             setTimeout(()=> {
               const obj = JSON.parse(JSON.stringify(_this.dishFlavors[index]))
               obj.showOption = st
@@ -434,11 +431,15 @@
           },
 
           checkOption(val, ind, index){
+                // 第二个输入框填上由所选的数据取出来的结果数据
             this.selectHandle(val.name, index, ind)
+
+              // 选择框上填上了所选的数据
             this.dishFlavors[index].name = val.name
           },
 
           selectHandle(val, key, ind){
+            // ... 作用 复制 合并 使用  var mergeArr = [...arr1,...arr2]
             const arrDate = [...this.dishFlavors]
             arrDate[key] = JSON.parse(JSON.stringify(this.dishFlavorsData[ind]))
             this.dishFlavors = arrDate
