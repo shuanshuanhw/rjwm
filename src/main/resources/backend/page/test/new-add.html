@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../../plugins/element-ui/index.css" />
+
+</head>
+<body>
+<div class="addBrand-container" id="food-add-app">
+
+</div>
+
+
+
+<!-- 开发环境版本，包含了有帮助的命令行警告 -->
+<script src="../../plugins/vue/vue.js"></script>
+<!-- 引入组件库 -->
+<script src="../../plugins/element-ui/index.js"></script>
+<!-- 引入axios -->
+<script src="../../plugins/axios/axios.min.js"></script>
+<script>
+    new Vue({
+        el: '#food-add-app',
+        data() {
+            return {
+                dishFlavorsData: [],
+                dishFlavors: [],
+                ruleForm  : {
+                    'name': '',
+                    'id': '',
+                    'price': '',
+                    'code': '',
+                    'image': '',
+                    'description': '',
+                    'dishFlavors': [],
+                    'status': true,
+                    categoryId: ''
+                },
+            }
+        },
+        computed: {
+        },
+        created() {
+            this.getFlavorListHand()
+        },
+        mounted() {
+        },
+        methods: {
+            show2 :() =>
+            {
+                // 箭头函数没有自己的this, 它的this是继承而来; 默认指向在定义它时所处的对象(宿主对象),而不是执行时的对象, 定义它的时候,可能环境是window
+                console.log('箭头方法.............................');
+                console.log(this.name);
+                console.log(this);
+            },
+            // 按钮 - 添加口味
+            addFlavore () {
+                this.dishFlavors.push({'name': '', 'value': [], showOption: false}) // JSON.parse(JSON.stringify(this.dishFlavorsData))
+                alert(this.name)
+                this.show2();
+            },
+
+            // 按钮 - 删除口味
+            delFlavor (ind) {
+                this.dishFlavors.splice(ind, 1)
+            },
+
+            // 按钮 - 删除口味标签
+            delFlavorLabel (index, ind) {
+                this.dishFlavors[index].value.splice(ind, 1)
+            },
+
+            //口味位置记录
+            flavorPosition (index) {
+                this.index = index
+            },
+
+            // 添加口味标签
+            keyDownHandle (val,index) {
+                console.log('keyDownHandle----val',val)
+                console.log('keyDownHandle----index',index)
+                console.log('keyDownHandle----this.dishFlavors',this.dishFlavors)
+                if (event) {
+                    event.cancelBubble = true
+                    event.preventDefault()
+                    event.stopPropagation()
+                }
+
+                if (val.target.innerText.trim() != '') {
+                    this.dishFlavors[index].value.push(val.target.innerText)
+                    val.target.innerText = ''
+                }
+            },
+
+
+            // 获取口味列表
+            getFlavorListHand () {
+                this.dishFlavorsData = [
+                    {'name':'甜味','value':['无糖','少糖','半糖','多糖','全糖']},
+                    {'name':'温度','value':['热饮','常温','去冰','少冰','多冰']},
+                    {'name':'忌口','value':['不要葱','不要蒜','不要香菜','不要辣']},
+                    {'name':'辣度','value':['不辣','微辣','中辣','重辣']}
+                ]
+            },
+
+            // 当输入框取得焦点后
+            // index是指数组遍历后的下标
+            // st由人为控制，控制
+            selectFlavor(st,index){
+                console.log('st',st)
+                console.log('index',index)
+                console.log('this.dishFlavors',this.dishFlavors)
+                // JSON.stringify 方法将一个 JavaScript 值（对象或者数组）转换为一个 JSON 字符串
+                // JSON.parse() 方法用来解析JSON字符串，构造由字符串描述的JavaScript值或对象
+                // 这里不知这么转来转去是几个意思
+                const obj = JSON.parse(JSON.stringify(this.dishFlavors[index]))
+                obj.showOption = st
+                // splice可以添加也可以删除数据
+                // (index,1,obj)的意思是在第index位增加一位叫obj的对象
+                //
+                // 替换一下
+                this.dishFlavors.splice(index,1,obj)
+
+                // this.dishFlavors[index].showOption = st 这是方法二，上面的是方法一，似乎方法二更简单明了
+            },
+
+            outSelect(st,index){
+                // 在vue中的普通方法中，this就是指向vue本身的，这里可能是因为下面用了箭头函数，箭头函数的this指向window，所以先存储起来
+
+                const _this = this
+                // setTimeout(要执行的代码, 等待的毫秒数)
+                // setTimeout(JavaScript 函数, 等待的毫秒数)
+                setTimeout(()=> {
+                    const obj = JSON.parse(JSON.stringify(_this.dishFlavors[index]))
+                    obj.showOption = st
+                    _this.dishFlavors.splice(index,1,obj)
+                }, 200)
+            },
+
+            inputHandle(val,index){
+                // this.selectFlavor(false,index)
+            },
+
+            checkOption(val, ind, index){
+                // 第二个输入框填上由所选的数据取出来的结果数据
+                this.selectHandle(val.name, index, ind)
+
+                // 选择框上填上了所选的数据
+                this.dishFlavors[index].name = val.name
+            },
+
+            selectHandle(val, key, ind){
+                // ... 作用 复制 合并 使用  var mergeArr = [...arr1,...arr2]
+                const arrDate = [...this.dishFlavors]
+                arrDate[key] = JSON.parse(JSON.stringify(this.dishFlavorsData[ind]))
+                this.dishFlavors = arrDate
+            },
+
+            submitForm(formName, st) {
+                this.$refs[formName].validate((valid) => {
+                    if (valid) {
+                        let params = {...this.ruleForm}
+                        // params.flavors = this.dishFlavors
+                        params.status = this.ruleForm ? 1 : 0
+                        params.price *= 100
+                        params.categoryId = this.ruleForm.categoryId
+                        params.flavors = this.dishFlavors.map(obj => ({ ...obj, value: JSON.stringify(obj.value) }))
+                        delete params.dishFlavors
+                        if(!this.imageUrl){
+                            this.$message.error('请上传菜品图片')
+                            return
+                        }
+                        if (this.actionType == 'add') {
+                            delete params.id
+                            addDish(params).then(res => {
+                                if (res.code === 1) {
+                                    this.$message.success('菜品添加成功！')
+                                    if (!st) {
+                                        this.goBack()
+                                    } else {
+                                        this.dishFlavors = []
+                                        // this.dishFlavorsData = []
+                                        this.imageUrl = ''
+                                        this.ruleForm = {
+                                            'name': '',
+                                            'id': '',
+                                            'price': '',
+                                            'code': '',
+                                            'image': '',
+                                            'description': '',
+                                            'dishFlavors': [],
+                                            'status': true,
+                                            categoryId: ''
+                                        }
+                                    }
+                                } else {
+                                    this.$message.error(res.msg || '操作失败')
+                                }
+                            }).catch(err => {
+                                this.$message.error('请求出错了：' + err)
+                            })
+                        } else {
+                            delete params.updateTime
+                            editDish(params).then(res => {
+                                if (res.code === 1) {
+                                    this.$message.success('菜品修改成功！')
+                                    this.goBack()
+                                } else {
+                                    this.$message.error(res.msg || '操作失败')
+                                }
+                            }).catch(err => {
+                                this.$message.error('请求出错了：' + err)
+                            })
+                        }
+                    } else {
+                        return false
+                    }
+                })
+            },
+
+            handleAvatarSuccess (response, file, fileList) {
+                // 拼接down接口预览
+                if(response.code === 0 && response.msg === '未登录'){
+                    window.top.location.href = '/backend/page/login/login.html'
+                }else{
+                    this.imageUrl = `/common/download?name=${response.data}`
+                    this.ruleForm.image = response.data
+                }
+            },
+
+            onChange (file) {
+                if(file){
+                    const suffix = file.name.split('.')[1]
+                    const size = file.size / 1024 / 1024 < 2
+                    if(['png','jpeg','jpg'].indexOf(suffix) < 0){
+                        this.$message.error('上传图片只支持 png、jpeg、jpg 格式！')
+                        this.$refs.upload.clearFiles()
+                        return false
+                    }
+                    if(!size){
+                        this.$message.error('上传文件大小不能超过 2MB!')
+                        return false
+                    }
+                    return file
+                }
+            },
+
+            goBack(){
+                window.parent.menuHandle({
+                    id: '4',
+                    url: '/backend/page/food/list.html',
+                    name: '菜品管理'
+                },false)
+            }
+        }
+    })
+</script>
+
+</body>
+</html>
