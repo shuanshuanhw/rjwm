@@ -50,9 +50,11 @@
               const size = file.size / 1024 / 1024 < 2
               if(['png','jpeg','jpg'].indexOf(suffix) < 0){
                 this.$message.error('上传图片只支持 png、jpeg、jpg 格式！')
-                this.$refs.upload.clearFiles()
+                  // 清除掉选择
+                  this.$refs.upload.clearFiles()
                 return false
               }
+              // 在前端就先限制上传的大小
               if(!size){
                 this.$message.error('上传文件大小不能超过 2MB!')
                 return false

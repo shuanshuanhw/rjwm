@@ -6,14 +6,70 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="../../plugins/element-ui/index.css" />
+    <link rel="stylesheet" href="../../styles/common.css" />
+    <link rel="stylesheet" href="../../styles/page.css" />
+    <style>
+        .selectInput {
+            position: relative;
+            width: 100%;
+            min-width: 100px;
+        }
+        .selectInput .flavorSelect {
+            position: absolute;
+            width: 100%;
+            padding: 0 10px;
+            border-radius: 3px;
+            border: solid 1px #FF903D;
+            line-height: 30px;
+            text-align: center;
+            background: #fff;
+            top: 50px;
+            z-index: 99;
+        }
+        .selectInput .flavorSelect .items {
+            cursor: pointer;
+            display: inline-block;
+            width: 100%;
+            line-height: 35px;
+            border-bottom: solid 1px #f4f4f4;
+            color: #666;
+        }
+        .selectInput .flavorSelect .none {
+            font-size: 14px;
+        }
 
+        #food-add-app .uploadImg .el-form-item__label::before{
+            content: '*';
+            color: #F56C6C;
+            margin-right: 4px;
+        }
+
+    </style>
 </head>
 <body>
 <div class="addBrand-container" id="food-add-app">
+开始
+    <div class="container">
+        <el-form
+                :inline="true"
+                label-width="180px"
+                class="demo-ruleForm"
+        >
+
+            <div class="flavorBox">
+            <el-form-item label="口味做法配置:">
+                <span
+                        v-if="dishFlavors.length == 0"
+                        class="addBut"
+                        @click="addFlavore"
+                > + 添加口味</span>
+
+            </el-form-item>
+            </div>
+        </el-form>
+    </div>
 
 </div>
-
-
 
 <!-- 开发环境版本，包含了有帮助的命令行警告 -->
 <script src="../../plugins/vue/vue.js"></script>

@@ -18,7 +18,7 @@
 }
 .main-container {
   height: 100%;
-  background: #f3f4f7;
+  /*background: #f3f4f7;*/
   position: relative;
   width: calc(100% - 190px);
 }
@@ -58,10 +58,11 @@
 }
 
 .navbar {
+  background-color: #5daf34;
   height: 64px;
   overflow: hidden;
   position: relative;
-  background: #fff;
+  /*background: #fff;*/
   box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
 }
 .navbar .hamburger-container {
